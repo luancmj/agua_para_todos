@@ -1,6 +1,6 @@
-import 'dart:js';
-
 import 'package:agua_para_todos/pages/source_page.dart';
+import 'package:agua_para_todos/repositories/source_repository.dart';
+import 'package:agua_para_todos/widgets/source_details.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -10,6 +10,7 @@ class SourceController extends ChangeNotifier {
   double long = 0.0;
   String erro = '';
   late GoogleMapController _mapsController;
+  Set<Marker> markers = <Marker>{};
 
   get mapsController => _mapsController;
 
@@ -34,7 +35,7 @@ class SourceController extends ChangeNotifier {
   }
 
   loadSources(){
-    final sources = ; //load sources for database or API
+    final sources = SourcesRepository().sources; //load sources for database or API
 
     sources.forEach((source) async {
       markers.add(
