@@ -37,15 +37,15 @@ class SourceController extends ChangeNotifier {
   loadSources(){
     final sources = SourcesRepository().sources; //load sources for database or API
 
-    sources.forEach((source) async {
+    sources.forEach((source) /*async*/ {
       markers.add(
         Marker(
           markerId: MarkerId(source.name),
           position: LatLng(source.latitude, source.longitude),
-          icon: await BitmapDescriptor.fromAssetImage(
+          /* icon: await BitmapDescriptor.fromAssetImage(
             ImageConfiguration(),
             'images/source.png', //adicionar no assets do pubspec.yaml
-            ),
+            ), */
           onTap: () => {
             showModalBottomSheet(
               context: appKey.currentState!.context,
@@ -64,7 +64,7 @@ class SourceController extends ChangeNotifier {
     bool active = await Geolocator.isLocationServiceEnabled();
 
     if(!active){
-      return Future.error("Por favor, habilite a localização no aparelho");
+      return Future.error("Por favor, habilite a localização no aparelho.");
     }
 
     permission = await Geolocator.checkPermission();
@@ -73,7 +73,7 @@ class SourceController extends ChangeNotifier {
       permission = await Geolocator.requestPermission();
 
       if(permission == LocationPermission.denied){
-        return Future.error("Você precisa autorizar o acesso à localização");
+        return Future.error("Você precisa autorizar o acesso à localização.");
       }
     }
 
