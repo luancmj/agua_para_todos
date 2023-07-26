@@ -10,9 +10,6 @@ class SourcePageMap extends StatelessWidget {
   Widget build(BuildContext context){
     return Scaffold(
       key: appKey,
-      appBar: AppBar(
-        title: Text("Nascentes")
-      ),
       body: ChangeNotifierProvider<SourceController>(
         create: (context) => SourceController(),
         child: Builder(

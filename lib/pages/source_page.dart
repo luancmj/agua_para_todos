@@ -12,7 +12,8 @@ class _SourcePageState extends State<SourcePage> {
   int _selectedIndex = 0;
 
   static final List<Widget> _widgetOptions = <Widget>[
-    SourcePageMap()
+    SourcePageMap(),
+    SourcePageMap(),SourcePageMap(),
   ];
 
   void _onItemTapped(int index) {
@@ -48,6 +49,8 @@ class _SourcePageState extends State<SourcePage> {
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber[800],
         onTap: _onItemTapped,
+        type: BottomNavigationBarType.shifting,
+        unselectedItemColor: Colors.black,
       ),
     );
   }
