@@ -5,7 +5,9 @@ import 'package:provider/provider.dart';
 
 final appKey = GlobalKey();
 
-class SourcePageMap extends StatelessWidget {
+class SourceMapPage extends StatelessWidget {
+  const SourceMapPage({super.key});
+
   @override
   Widget build(BuildContext context){
     return Scaffold(

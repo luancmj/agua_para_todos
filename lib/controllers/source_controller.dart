@@ -1,4 +1,4 @@
-import 'package:agua_para_todos/pages/source_page_map.dart';
+import 'package:agua_para_todos/pages/source_map_page.dart';
 import 'package:agua_para_todos/repositories/source_repository.dart';
 import 'package:agua_para_todos/widgets/source_details.dart';
 import 'package:flutter/material.dart';

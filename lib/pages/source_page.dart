@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:agua_para_todos/pages/source_page_map.dart';
+import 'package:agua_para_todos/pages/source_map_page.dart';
+import 'package:agua_para_todos/pages/source_form_page.dart';
 
 class SourcePage extends StatefulWidget{
   const SourcePage({super.key});
@@ -11,9 +12,10 @@ class SourcePage extends StatefulWidget{
 class _SourcePageState extends State<SourcePage> {
   int _selectedIndex = 0;
 
-  static final List<Widget> _widgetOptions = <Widget>[
-    SourcePageMap(),
-    SourcePageMap(),SourcePageMap(),
+  static const List<Widget> _widgetOptions = <Widget>[
+    SourceMapPage(),
+    SourceFormPage(),
+    //SourceMorePage(),
   ];
 
   void _onItemTapped(int index) {
@@ -26,7 +28,7 @@ class _SourcePageState extends State<SourcePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Nascentes App'),
+        title: const Text('Nascentes App'), foregroundColor: Colors.white,
       ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
@@ -47,7 +49,7 @@ class _SourcePageState extends State<SourcePage> {
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: Colors.cyan[400],
         onTap: _onItemTapped,
         type: BottomNavigationBarType.shifting,
         unselectedItemColor: Colors.black,
