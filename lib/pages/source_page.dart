@@ -1,37 +1,53 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:agua_para_todos/controllers/source_controller.dart';
-import 'package:provider/provider.dart';
+import 'package:agua_para_todos/pages/source_page_map.dart';
 
-final appKey = GlobalKey();
+class SourcePage extends StatefulWidget{
+  const SourcePage({super.key});
 
-class SourcePage extends StatelessWidget {
   @override
-  Widget build(BuildContext context){
-    return Scaffold(
-      key: appKey,
-      appBar: AppBar(
-        title: Text("Nascentes")
-      ),
-      body: ChangeNotifierProvider<SourceController>(
-        create: (context) => SourceController(),
-        child: Builder(
-          builder: (context){
-            final local = context.watch<SourceController>();
+  State<SourcePage> createState() => _SourcePageState();
+}
 
-            return GoogleMap(
-              initialCameraPosition: CameraPosition(
-                target: LatLng(local.lat, local.long),
-                zoom: 18,
-              ),
-              zoomControlsEnabled: true,
-              mapType: MapType.normal,
-              myLocationEnabled: true,
-              onMapCreated: local.onMapCreated,
-              markers: local.markers,
-              );
-          }
-        ),
+class _SourcePageState extends State<SourcePage> {
+  int _selectedIndex = 0;
+
+  static final List<Widget> _widgetOptions = <Widget>[
+    SourcePageMap()
+  ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Nascentes App'),
+      ),
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.map_outlined),
+            label: 'Mapa',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add_location_alt_outlined),
+            label: 'Cadastro de Nascente',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.help_outline_outlined),
+            label: 'Saiba mais',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.amber[800],
+        onTap: _onItemTapped,
       ),
     );
   }
