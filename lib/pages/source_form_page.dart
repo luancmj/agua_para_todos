@@ -19,6 +19,7 @@ class SourceFormPageState extends State<SourceFormPage> {
   // Note: This is a `GlobalKey<FormState>`,
   // not a GlobalKey<SourceFormPageState>.
   final _formKey = GlobalKey<FormState>();
+  bool light = false;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +30,12 @@ class SourceFormPageState extends State<SourceFormPage> {
         children: [
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-            child: Text('Cadastro de Nascente')
+            child: Text(
+              'Cadastro de Nascente',
+              style: TextStyle(
+                fontSize: 16
+              ),
+            )
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
@@ -37,7 +43,7 @@ class SourceFormPageState extends State<SourceFormPage> {
               decoration: const InputDecoration(
                 border: UnderlineInputBorder(),
                 labelText: 'Nome',
-                focusColor: Colors.blueAccent
+                focusColor: Colors.blueAccent,
               ),
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -47,7 +53,41 @@ class SourceFormPageState extends State<SourceFormPage> {
               },
             ),
           ),
-
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            child: TextFormField(
+              decoration: const InputDecoration(
+                border: UnderlineInputBorder(),
+                labelText: 'Endereço',
+                focusColor: Colors.blueAccent
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return 'Informe um endereço para a nascente';
+                }
+                return null;
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            child: Row(
+              children: [
+                const Text('Propriedade privada?'),
+                Switch(
+                  // This bool value toggles the switch.
+                  value: light,
+                  activeColor: Colors.blueAccent,
+                  onChanged: (bool value) {
+                    // This is called when the user toggles the switch.
+                    setState(() {
+                      light = value;
+                    });
+                  },
+                ),
+              ],
+            )
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
             child: ElevatedButton(

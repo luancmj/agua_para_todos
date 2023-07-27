@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "991063967881",
+    "project_id": "agua-para-todos-e3fa2",
+    "storage_bucket": "agua-para-todos-e3fa2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:991063967881:android:ed166852c07aadf3dd9e58",
+        "android_client_info": {
+          "package_name": "com.example.agua_para_todos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "991063967881-ngju39ss5i6kes9d5eisgtrsfda05d9c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDESMm_UJZnhKuRx0NBnbh4FVWk5vsCHzM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "991063967881-ngju39ss5i6kes9d5eisgtrsfda05d9c.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "991063967881-3777mh19s56e26r5e48r1jgngpqup7l5.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.aguaParaTodos"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

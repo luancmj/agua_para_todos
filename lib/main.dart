@@ -3,10 +3,16 @@ import 'package:flutter_config/flutter_config.dart';
 import 'package:agua_para_todos/pages/source_page.dart';
 import 'package:agua_para_todos/repositories/source_repository.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   FlutterConfig.loadEnvVariables();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(
     ChangeNotifierProvider<SourcesRepository>(
