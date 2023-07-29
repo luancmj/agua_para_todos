@@ -1,14 +1,13 @@
-import 'package:agua_para_todos/models/source.dart';
+import 'package:agua_para_todos/models/water_source.dart';
 import 'package:flutter/material.dart';
 
 class SourceDetail extends StatelessWidget {
-  Source source;
+  WaterSource source;
   SourceDetail({Key? key, required this.source}) : super(key: key);
 
   @override
   Widget build(BuildContext context){
-    return Container(
-      child: Wrap(
+    return Wrap(
         children: [
           Image.network(
             source.image,
@@ -17,23 +16,22 @@ class SourceDetail extends StatelessWidget {
             fit: BoxFit.cover,
           ),
           Padding(
-            padding: EdgeInsets.only(top: 24, left: 24),
+            padding: const EdgeInsets.only(top: 24, left: 24),
             child: Text(
               source.name,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 26,
                 fontWeight: FontWeight.w600,
               ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(bottom: 60, left: 24),
+            padding: const EdgeInsets.only(bottom: 60, left: 24),
             child: Text(
               source.address
             ),
           ),
         ],
-      ),
-    );
+      );
   }
 }

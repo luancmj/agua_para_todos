@@ -35,12 +35,26 @@ class SourceController extends ChangeNotifier {
   }
 
   loadSources(){
-    final sources = SourcesRepository().sources; //load sources for database or API
+    SourcesRepository().getSources().forEach((source) async {
+      for (var s in source) {
+        markers.add(
+          Marker(
+            markerId: MarkerId(s.id),
+            position: LatLng(s.latitude, s.longitude),
+            onTap: () => {
+              showModalBottomSheet(
+                context: appKey.currentState!.context,
+                builder: (context) => SourceDetail(source: s))
+            },
+          )
+        );
+      }
+    }); //load sources for database or API
 
-    sources.forEach((source) /*async*/ {
+    /* sources.forEach((source) /*async*/ {
       markers.add(
         Marker(
-          markerId: MarkerId(source.name),
+          markerId: MarkerId(source),
           position: LatLng(source.latitude, source.longitude),
           /* icon: await BitmapDescriptor.fromAssetImage(
             ImageConfiguration(),
@@ -54,7 +68,7 @@ class SourceController extends ChangeNotifier {
           },
         ),
       );
-    });
+    }); */
 
     notifyListeners();
   }

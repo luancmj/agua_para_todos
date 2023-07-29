@@ -1,4 +1,8 @@
+
+import 'package:agua_para_todos/models/water_source.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 
 // Define a custom Form widget.
 class SourceFormPage extends StatefulWidget {
@@ -20,6 +24,12 @@ class SourceFormPageState extends State<SourceFormPage> {
   // not a GlobalKey<SourceFormPageState>.
   final _formKey = GlobalKey<FormState>();
   bool light = false;
+  final controllerName = TextEditingController();
+  final controllerAddress = TextEditingController();
+  final controllerIsPrivate = TextEditingController();
+  final controllerImage = TextEditingController();
+
+  Position? _currentPosition;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +50,7 @@ class SourceFormPageState extends State<SourceFormPage> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             child: TextFormField(
+              controller: controllerName,
               decoration: const InputDecoration(
                 border: UnderlineInputBorder(),
                 labelText: 'Nome',
@@ -56,6 +67,7 @@ class SourceFormPageState extends State<SourceFormPage> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
             child: TextFormField(
+              controller: controllerAddress,
               decoration: const InputDecoration(
                 border: UnderlineInputBorder(),
                 labelText: 'Endereço',
@@ -91,21 +103,61 @@ class SourceFormPageState extends State<SourceFormPage> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
             child: ElevatedButton(
-              onPressed: (){
-                // Validate returns true if the form is valid, or false otherwise.
-                if (_formKey.currentState!.validate()) {
-                  // If the form is valid, display a snackbar. In the real world,
-                  // you'd often call a server or save the information in a database.
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text('Salvo com sucesso!')),
-                  );
-                }
-              },
-              child: const Text('Salvar'),
+              onPressed: _getCurrentPosition,
+              child: const Text('Cadastrar Nascente'),
             ),
-          )
+          ),
         ],
       ),
     );
+  }
+
+  Future createSource(WaterSource source) async {
+    //document on cloud firestore
+    final docSource = FirebaseFirestore.instance.collection('sources').doc();
+
+    source.id = docSource.id;
+
+    final sourceJson = source.toJson();
+
+    //create document and write data to Firebase
+    await docSource.set(sourceJson);
+  }
+
+  Future<void> _getCurrentPosition() async {
+    await Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.high)
+        .then((Position position) {
+      setState(() => _currentPosition = position);
+    }).catchError((e) {
+      debugPrint(e);
+    });
+
+    validateForm();
+
+    createNewSource();
+  }
+
+  void validateForm() {
+    // Validate returns true if the form is valid, or false otherwise.
+    if (_formKey.currentState!.validate()) {
+      // If the form is valid, display a snackbar. In the real world,
+      // you'd often call a server or save the information in a database.
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Salvo com sucesso!')),
+      );
+    }
+  }
+
+  void createNewSource() {
+    final source = WaterSource(
+      name: controllerName.text,
+      address: controllerAddress.text,
+      isPrivate: light,
+      latitude: _currentPosition!.latitude,
+      longitude: _currentPosition!.longitude
+    );
+    
+    createSource(source);
   }
 }
