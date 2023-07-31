@@ -1,9 +1,11 @@
 import 'package:agua_para_todos/models/water_source.dart';
 import 'package:flutter/material.dart';
 
+
+@immutable
 class SourceDetail extends StatelessWidget {
-  WaterSource source;
-  SourceDetail({Key? key, required this.source}) : super(key: key);
+  final WaterSource source;
+  const SourceDetail({Key? key, required this.source}) : super(key: key);
 
   @override
   Widget build(BuildContext context){

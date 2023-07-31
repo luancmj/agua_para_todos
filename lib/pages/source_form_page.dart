@@ -101,6 +101,30 @@ class SourceFormPageState extends State<SourceFormPage> {
             )
           ),
           Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            child: Row(
+              children: [
+                ElevatedButton.icon(
+                  label: const Padding(
+                    padding: EdgeInsets.all(10),
+                    child: Text('Tirar Foto'),
+                    ),
+                  icon: const Icon(Icons.camera_alt),
+                  onPressed: (){},
+                ),
+                const Padding(
+                  padding: EdgeInsets.all(10),
+                  child: Text('ou'),
+                ),
+                OutlinedButton.icon(
+                  label: const Text('foto'),
+                  icon: const Icon(Icons.camera_alt_outlined),
+                  onPressed: (){},
+                )
+              ],
+            )
+          ),
+          Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
             child: ElevatedButton(
               onPressed: _getCurrentPosition,
