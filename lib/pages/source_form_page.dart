@@ -1,8 +1,11 @@
 
+import 'dart:io';
+
 import 'package:agua_para_todos/models/water_source.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:image_picker/image_picker.dart';
 
 // Define a custom Form widget.
 class SourceFormPage extends StatefulWidget {
@@ -28,6 +31,9 @@ class SourceFormPageState extends State<SourceFormPage> {
   final controllerAddress = TextEditingController();
   final controllerIsPrivate = TextEditingController();
   final controllerImage = TextEditingController();
+
+  ImagePicker imagePicker = ImagePicker();
+  File? selectedImage;
 
   Position? _currentPosition;
 
@@ -100,29 +106,46 @@ class SourceFormPageState extends State<SourceFormPage> {
               ],
             )
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+          Center(
             child: Row(
               children: [
-                ElevatedButton.icon(
-                  label: const Padding(
-                    padding: EdgeInsets.all(10),
-                    child: Text('Tirar Foto'),
-                    ),
-                  icon: const Icon(Icons.camera_alt),
-                  onPressed: (){},
+                const Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Text('Adicionar imagem?'),
                 ),
                 const Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Text('ou'),
+                  padding: EdgeInsets.all(1),
+                  child: Text('Galeria'),
                 ),
-                OutlinedButton.icon(
-                  label: const Text('foto'),
-                  icon: const Icon(Icons.camera_alt_outlined),
-                  onPressed: (){},
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: IconButton(
+                    onPressed: (){
+                      getImageFromGallery();
+                    },
+                    icon: const Icon(Icons.add_photo_alternate_outlined),
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.all(1),
+                  child: Text('Câmera'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: IconButton(
+                    onPressed: (){
+                      takePicFromCamera();
+                    },
+                    icon: const Icon(Icons.photo_camera_outlined),
+                  ),
                 )
               ],
-            )
+            ),
+          ),
+          selectedImage == null ? Container() : SizedBox(
+            height: 150,
+            width: 150,
+            child: Image.file(selectedImage!),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16),
@@ -183,5 +206,25 @@ class SourceFormPageState extends State<SourceFormPage> {
     );
     
     createSource(source);
+  }
+
+  getImageFromGallery() async {
+    final XFile? tempImage = await imagePicker.pickImage(source: ImageSource.gallery);
+
+    if(tempImage != null){
+      setState(() {
+        selectedImage = File(tempImage.path);
+      });
+    }
+  }
+
+  takePicFromCamera() async {
+    final XFile? tempImage = await imagePicker.pickImage(source: ImageSource.camera);
+
+    if(tempImage != null){
+      setState(() {
+        selectedImage = File(tempImage.path);
+      });
+    }
   }
 }
