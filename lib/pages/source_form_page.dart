@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:agua_para_todos/models/water_source.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
@@ -36,6 +37,9 @@ class SourceFormPageState extends State<SourceFormPage> {
   File? selectedImage;
 
   Position? _currentPosition;
+
+  List<Reference> remoteRef = [];
+  List<String> uri = [];
 
   @override
   Widget build(BuildContext context) {
@@ -163,6 +167,30 @@ class SourceFormPageState extends State<SourceFormPage> {
     //document on cloud firestore
     final docSource = FirebaseFirestore.instance.collection('sources').doc();
 
+    final FirebaseStorage storage = FirebaseStorage.instance;
+
+    if(source.image.isNotEmpty){
+
+      File file = File(source.image);
+
+      try {
+        //local image reference
+        String localRef = 'sources/img-${DateTime.now().toString()}.jpg';
+        //save local image reference in Storage
+        await storage.ref(localRef).putFile(file);
+      } on FirebaseException catch (e) {
+        throw Exception('Erro no upload: ${e.code}');
+      }
+
+      //remote image reference
+      remoteRef = (await storage.ref('sources').listAll()).items;
+      uri.add(await remoteRef.last.getDownloadURL());
+
+      //save remote image reference in Firestore
+      source.image = uri[0];
+    }
+
+
     source.id = docSource.id;
 
     final sourceJson = source.toJson();
@@ -202,7 +230,8 @@ class SourceFormPageState extends State<SourceFormPage> {
       address: controllerAddress.text,
       isPrivate: light,
       latitude: _currentPosition!.latitude,
-      longitude: _currentPosition!.longitude
+      longitude: _currentPosition!.longitude,
+      image: selectedImage?.path ?? ''
     );
     
     createSource(source);

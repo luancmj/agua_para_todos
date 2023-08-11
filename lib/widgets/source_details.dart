@@ -10,6 +10,7 @@ class SourceDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context){
     return Wrap(
+        direction: Axis.vertical,
         children: [
           Image.network(
             source.image,
@@ -18,7 +19,7 @@ class SourceDetail extends StatelessWidget {
             fit: BoxFit.cover,
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 24, left: 24),
+            padding: const EdgeInsets.only(top: 18, left: 24),
             child: Text(
               source.name,
               style: const TextStyle(
@@ -28,9 +29,21 @@ class SourceDetail extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(bottom: 60, left: 24),
+            padding: const EdgeInsets.only(left: 24, bottom: 3),
             child: Text(
               source.address
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 24, bottom: 3),
+            child: Text(
+              '${source.latitude}, ${source.longitude}'
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 24, bottom: 15),
+            child: Text(
+              source.isPrivate ? "Privada" : "Não privada"
             ),
           ),
         ],

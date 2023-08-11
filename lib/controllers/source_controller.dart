@@ -34,6 +34,7 @@ class SourceController extends ChangeNotifier {
     notifyListeners();
   }
 
+  //load sources for database or API
   loadSources(){
     SourcesRepository().getSources().forEach((source) async {
       for (var s in source) {
@@ -49,26 +50,7 @@ class SourceController extends ChangeNotifier {
           )
         );
       }
-    }); //load sources for database or API
-
-    /* sources.forEach((source) /*async*/ {
-      markers.add(
-        Marker(
-          markerId: MarkerId(source),
-          position: LatLng(source.latitude, source.longitude),
-          /* icon: await BitmapDescriptor.fromAssetImage(
-            ImageConfiguration(),
-            'images/source.png', //adicionar no assets do pubspec.yaml
-            ), */
-          onTap: () => {
-            showModalBottomSheet(
-              context: appKey.currentState!.context,
-              builder: (context) => SourceDetail(source: source),
-            )
-          },
-        ),
-      );
-    }); */
+    });
 
     notifyListeners();
   }

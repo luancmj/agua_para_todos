@@ -17,11 +17,13 @@ void main() async{
   runApp(
     ChangeNotifierProvider<SourcesRepository>(
       create: (_) => SourcesRepository(),
-      child: SourceApp(),
+      child: const SourceApp(),
     ),
   );
 }
 class SourceApp extends StatelessWidget {
+  const SourceApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -29,7 +31,7 @@ class SourceApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.lightBlue,
       ),
-      home: SourcePage(),
+      home: const SourcePage(),
     );
   }
 }

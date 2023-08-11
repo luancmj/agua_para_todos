@@ -1,3 +1,4 @@
+import 'package:agua_para_todos/pages/source_help_page.dart';
 import 'package:flutter/material.dart';
 import 'package:agua_para_todos/pages/source_map_page.dart';
 import 'package:agua_para_todos/pages/source_form_page.dart';
@@ -15,11 +16,11 @@ class _SourcePageState extends State<SourcePage> {
   static const List<Widget> _widgetOptions = <Widget>[
     SourceMapPage(),
     SourceFormPage(),
-    //SourceMorePage(),
+    SourceHelpPage(),
   ];
 
   void _onItemTapped(int index) {
-    if(index != 2){
+    if(index != 3){
       setState(() {
         _selectedIndex = index;
       });
