@@ -35,13 +35,19 @@ class SourceController extends ChangeNotifier {
   }
 
   //load sources for database or API
-  loadSources(){
+  loadSources() async {
+    BitmapDescriptor markerbitmap = await BitmapDescriptor.fromAssetImage(
+        const ImageConfiguration(),
+        "assets/images/custom_marker.png",
+    );
+
     SourcesRepository().getSources().forEach((source) async {
       for (var s in source) {
         markers.add(
           Marker(
             markerId: MarkerId(s.id),
             position: LatLng(s.latitude, s.longitude),
+            icon: markerbitmap,
             onTap: () => {
               showModalBottomSheet(
                 context: appKey.currentState!.context,
